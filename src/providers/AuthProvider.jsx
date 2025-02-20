@@ -11,10 +11,10 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { app } from '../firebase/firebase.config'
-import axios from 'axios'
 
-// eslint-disable-next-line react-refresh/only-export-components
+// Create Authentication Context
 export const AuthContext = createContext(null)
+
 const auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()
 
@@ -22,61 +22,89 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const createUser = (email, password) => {
+  // Create user with email & password
+  const createUser = async (email, password) => {
     setLoading(true)
-    return createUserWithEmailAndPassword(auth, email, password)
+    try {
+      return await createUserWithEmailAndPassword(auth, email, password)
+    } catch (error) {
+      console.error('Error creating user:', error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const signIn = (email, password) => {
+  // Sign in with email & password
+  const signIn = async (email, password) => {
     setLoading(true)
-    return signInWithEmailAndPassword(auth, email, password)
+    try {
+      return await signInWithEmailAndPassword(auth, email, password)
+    } catch (error) {
+      console.error('Error signing in:', error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const signInWithGoogle = () => {
+  // Google sign-in
+  const signInWithGoogle = async () => {
     setLoading(true)
-    return signInWithPopup(auth, googleProvider)
+    try {
+      return await signInWithPopup(auth, googleProvider)
+    } catch (error) {
+      console.error('Error with Google sign-in:', error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
+  // Logout user
   const logOut = async () => {
     setLoading(true)
-    return signOut(auth)
-  }
-
-  const updateUserProfile = (name, photo) => {
-    return updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: photo,
-    })
-  }
-
-  // onAuthStateChange
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-      console.log('CurrentUser-->', currentUser)
-      if (currentUser?.email) {
-        setUser(currentUser)
-
-        // Get JWT token
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/jwt`,
-          {
-            email: currentUser?.email,
-          },
-          { withCredentials: true }
-        )
-      } else {
-        setUser(currentUser)
-        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-          withCredentials: true,
-        })
-      }
+    try {
+      await signOut(auth)
+    } catch (error) {
+      console.error('Error logging out:', error.message)
+    } finally {
       setLoading(false)
-    })
-    return () => {
-      return unsubscribe()
     }
+  }
+
+  // Update user profile (name & photo)
+  const updateUserProfile = async (name, photo) => {
+    if (!auth.currentUser) return
+    try {
+      return await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: photo,
+      })
+    } catch (error) {
+      console.error('Error updating profile:', error.message)
+    }
+  }
+
+  // Handle user authentication state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      try {
+        if (currentUser?.email) {
+          // Set user state
+          setUser(currentUser)
+        } else {
+          // Clear user state
+          setUser(null)
+        }
+      } catch (error) {
+        console.error('Error in auth state change:', error.message)
+      } finally {
+        setLoading(false)
+      }
+    })
+
+    return () => unsubscribe()
   }, [])
 
+  // Authentication context value
   const authInfo = {
     user,
     setUser,

@@ -6,6 +6,7 @@ import Container from '../Container'
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
+  
 
   return (
     <div className='fixed w-full bg-white z-10 shadow-sm'>
@@ -26,6 +27,7 @@ const Navbar = () => {
                   src={user.photoURL || avatarImg}
                   alt='profile'
                 />
+                
                 <button onClick={logOut} className='btn btn-error btn-sm'>
                   Logout
                 </button>
