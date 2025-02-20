@@ -5,17 +5,18 @@ import Login from '../pages/Login/Login'
 import SignUp from '../pages/SignUp/SignUp'
 
 import MainLayout from '../layouts/MainLayout'
+import PrivateRoute from './PrivateRoute'
 
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: <PrivateRoute><Home /></PrivateRoute>,
       },
       
     ],

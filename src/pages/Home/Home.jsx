@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-import CreateTask from './CreateTask'
+
 import Container from '../../components/Shared/Container'
 import TaskBoard from './TaskBoard/TaskBoard'
 
@@ -13,7 +13,7 @@ const Home = () => {
       </Helmet>
 
       <Container>
-        <CreateTask></CreateTask>
+        
     
       <section className=''>
        
