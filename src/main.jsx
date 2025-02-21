@@ -9,18 +9,21 @@ import { Toaster } from 'react-hot-toast'
 import { HelmetProvider } from 'react-helmet-async'
 import 'react-date-range/dist/styles.css' // main style file
 import 'react-date-range/dist/theme/default.css' // theme css file
+import { ThemeProvider } from './providers/ThemeContext'
 
 // Create a client
 const queryClient = new QueryClient()
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-        <Toaster position='top-right' reverseOrder={false} />
-      </HelmetProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <HelmetProvider>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+          <Toaster position='top-right' reverseOrder={false} />
+        </HelmetProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </StrictMode>
 )

@@ -3,13 +3,14 @@ import useAuth from '../../../hooks/useAuth'
 import avatarImg from '../../../assets/images/placeholder.jpg'
 import logo from '../../../assets/images/tasksLogo.png'
 import Container from '../Container'
+import ThemeToggleButton from '../Button/ThemeToggleButton'
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
   
 
   return (
-    <div className='fixed w-full bg-white z-10 shadow-sm'>
+    <div className='fixed dark:bg-slate-900 w-full bg-white z-10 shadow-sm'>
       <div className='py-4 border-b-[1px]'> 
         <Container>
           <div className=' flex justify-between items-center px-4'>
@@ -17,6 +18,9 @@ const Navbar = () => {
           <Link to='/'>
             <img src={logo} alt='logo' width='80' height='80' />
           </Link>
+          <div>
+            <ThemeToggleButton></ThemeToggleButton>
+          </div>
 
           {/* Navigation Links */}
           <div className='flex items-center gap-4'>

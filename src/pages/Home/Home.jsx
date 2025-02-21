@@ -7,7 +7,7 @@ import TaskBoard from './TaskBoard/TaskBoard'
 
 const Home = () => {
   return (
-    <div>
+    <div className='dark:bg-slate-900'>
       <Helmet>
         <title> Task-Man | Complete Your Task</title>
       </Helmet>
