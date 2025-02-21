@@ -6,8 +6,9 @@ import CreateTask from "../CreateTask";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 // import Swal from "sweetalert2"; // Import SweetAlert2
-
+import { BiSolidAddToQueue } from "react-icons/bi";
 const categories = ["To-Do", "In Progress", "Done"];
+import { GiCancel } from "react-icons/gi";
 
 const getCategoryColor = (category) => {
   switch (category) {
@@ -106,11 +107,19 @@ const TaskBoard = () => {
     <div className="flex flex-col w-full gap-10 p-4 sm:p-6 lg:p-8">
       {/* Button to toggle create task form */}
       <button
-        className="btn btn-primary mb-6"
-        onClick={() => setIsCreateFormOpen(!isCreateFormOpen)}
-      >
-        {isCreateFormOpen ? 'Cancel Create Task' : 'Create New Task'}
-      </button>
+  className="btn btn-success btn-outline text-3xl px-12 py-8 min-h-[100px] flex items-center gap-4"
+  onClick={() => setIsCreateFormOpen(!isCreateFormOpen)}
+>
+  {isCreateFormOpen ? (
+    <>
+      <GiCancel size={40} /> <span>Cancel Create Task</span>
+    </>
+  ) : (
+    <>
+      <BiSolidAddToQueue size={40} /> <span>Create New Task</span>
+    </>
+  )}
+</button>
 
       {/* Create Task Form */}
       {isCreateFormOpen && (
@@ -142,17 +151,55 @@ const TaskBoard = () => {
                             {...provided.dragHandleProps}
                             className={`card text-black dark:text-white  w-full sm:w-full md:w-96 mb-4 ${getCategoryColor(task.category)}`}
                           >
-                            <div className="card-body shadow-2xl">
-                              <h2 className="card-title">{task.title}</h2>
-                              <p>{task.description}</p>
-                              <p>{task.email}</p>
-                              <p>{task.displayName}</p>
-                              <p className="text-xs opacity-80">
-                                {new Date(task.timestamp).toLocaleString()}
-                              </p>
-                              <div className="card-actions justify-end">
-                                <button className="btn btn-outline btn-primary btn-sm shadow-lg" onClick={() => openUpdateModal(task)}><FaRegEdit />Edit</button>
-                                <button className="btn btn-error btn-outline  btn-sm shadow-lg" onClick={() => handleDelete(task._id)}><MdDeleteForever />Delete</button>
+                            <div className="card shadow-xl rounded-2xl p-4 border border-gray-200 dark:text-white">
+                              <div className="card-body space-y-4">
+
+                                {/* User Info Section */}
+                                <div className="flex items-center gap-4">
+                                  {/* User Image or Initial */}
+                                  {task.image ? (
+                                    <img
+                                      src={task.image}
+                                      alt={task.displayName}
+                                      className="w-12 h-12 rounded-full object-cover border border-gray-300"
+                                    />
+                                  ) : (
+                                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-300 text-green-700 font-bold text-lg">
+                                      {task.displayName?.charAt(0).toUpperCase()}
+                                    </div>
+                                  )}
+
+                                  {/* Name & Email */}
+                                  <div>
+                                    <h3 className="text-lg font-semibold ">{task.displayName}</h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-200">{task.email}</p>
+                                  </div>
+                                </div>
+
+                                {/* Task Content */}
+                                <h2 className="text-lg font-semibold text-gray-800 dark:text-white">{task.title}</h2>
+                                <p className="text-gray-600 dark:text-gray-200">{task.description}</p>
+
+                                <p className="text-xs text-gray-500 dark:text-gray-100">
+                                  {new Date(task.timestamp).toLocaleString()}
+                                </p>
+
+                                {/* Action Buttons */}
+                                <div className="flex justify-end gap-4 mt-3">
+                                  <button
+                                    className="flex items-center gap-1 px-4 py-1.5 text-sm font-medium text-blue-600 border border-blue-500 rounded-lg hover:bg-blue-100 transition-all "
+                                    onClick={() => openUpdateModal(task)}
+                                  >
+                                    <FaRegEdit size={18} /> Edit
+                                  </button>
+
+                                  <button
+                                    className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-red-600 border border-red-500 rounded-lg hover:bg-red-100 transition-all"
+                                    onClick={() => handleDelete(task._id)}
+                                  >
+                                    <MdDeleteForever size={18} /> Delete
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>

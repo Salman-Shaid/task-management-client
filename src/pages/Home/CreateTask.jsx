@@ -50,8 +50,8 @@ const CreateTask = ({ onTaskCreated }) => {
   };
 
   return (
-    <div className="hero bg-base-200 rounded-xl">
-      <div className="hero-content flex-col lg:flex-row-reverse ">
+    <div className="hero bg-green-700 dark:bg-base-200 rounded-xl">
+      <div className="hero-content gap-20 flex-col lg:flex-row-reverse ">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Create a New Task</h1>
           <p className="py-6">

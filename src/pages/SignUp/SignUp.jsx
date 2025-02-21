@@ -1,167 +1,111 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
-import useAuth from '../../hooks/useAuth'
-import { toast } from 'react-hot-toast'
-import { TbFidgetSpinner } from 'react-icons/tb'
-import { imageUpload, saveUser } from '../../api/utils'
+import { Link, useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { TbFidgetSpinner } from "react-icons/tb";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
+import { imageUpload, saveUser } from "../../api/utils";
+import Lottie from "lottie-react";
+import signupAnimation from "../../assets/animation/signUp.json";
 
 const SignUp = () => {
-  const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth()
-  const navigate = useNavigate()
-  // form submit handler
-  const handleSubmit = async event => {
-    event.preventDefault()
-    const form = event.target
-    const name = form.name.value
-    const email = form.email.value
-    const password = form.password.value
-    const image = form.image.files[0]
+  const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth();
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-    //1. send image data to imgbb
-    const photoURL = await imageUpload(image)
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+    setIsSubmitting(true);
+
+    const form = event.target;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const password = form.password.value.trim();
+    const image = form.image.files[0];
+
+    if (!name || !email || !password || !image) {
+      setError("All fields are required.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      //2. User Registration
-      const result = await createUser(email, password)
-
-      //3. Save username & profile photo
-      await updateUserProfile(name, photoURL)
-      console.log(result)
-      // save user info in db if the user is new
-      await saveUser({ ...result?.user, displayName: name, photoURL })
-      navigate('/')
-      toast.success('Signup Successful')
+      const photoURL = await imageUpload(image);
+      const result = await createUser(email, password);
+      await updateUserProfile(name, photoURL);
+      await saveUser({ ...result?.user, displayName: name, photoURL });
+      navigate("/");
+      toast.success("Signup Successful");
     } catch (err) {
-      console.log(err)
-      toast.error(err?.message)
+      setError(err?.message || "Signup failed");
+      toast.error(err?.message);
+    } finally {
+      setIsSubmitting(false);
     }
-  }
+  };
 
-  // Handle Google Signin
   const handleGoogleSignIn = async () => {
+    setError("");
+    setIsSubmitting(true);
     try {
-      //User Registration using google
-      const data = await signInWithGoogle()
-      await saveUser(data?.user)
-      navigate('/')
-      toast.success('Signup Successful')
+      const data = await signInWithGoogle();
+      await saveUser(data?.user);
+      navigate("/");
+      toast.success("Signup Successful");
     } catch (err) {
-      console.log(err)
-      toast.error(err?.message)
+      setError(err?.message || "Google Sign-up failed");
+      toast.error(err?.message);
+    } finally {
+      setIsSubmitting(false);
     }
-  }
+  };
+
   return (
-    <div className='flex justify-center items-center min-h-screen bg-white'>
-      <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-        <div className='mb-8 text-center'>
-          <h1 className='my-3 text-4xl font-bold'>Sign Up</h1>
-          <p className='text-sm text-gray-400'>Welcome to PlantNet</p>
+    <div className="flex flex-col md:flex-row justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="hidden md:flex w-1/2 justify-center">
+        <Lottie animationData={signupAnimation} loop={true} className="w-[80%]" />
+      </div>
+      <div className="w-full md:w-1/2 bg-white shadow-lg rounded-lg p-8 max-w-md">
+        <div className="mb-6 text-center">
+          <h1 className="text-4xl font-bold text-gray-900">Sign Up</h1>
+          <p className="text-sm text-gray-500">Create an account to get started</p>
         </div>
-        <form
-          onSubmit={handleSubmit}
-          noValidate=''
-          action=''
-          className='space-y-6 ng-untouched ng-pristine ng-valid'
-        >
-          <div className='space-y-4'>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Name
-              </label>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Enter Your Name Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <label htmlFor='image' className='block mb-2 text-sm'>
-                Select Image:
-              </label>
-              <input
-                required
-                type='file'
-                id='image'
-                name='image'
-                accept='image/*'
-              />
-            </div>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Email address
-              </label>
-              <input
-                type='email'
-                name='email'
-                id='email'
-                required
-                placeholder='Enter Your Email Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <div className='flex justify-between'>
-                <label htmlFor='password' className='text-sm mb-2'>
-                  Password
-                </label>
-              </div>
-              <input
-                type='password'
-                name='password'
-                autoComplete='new-password'
-                id='password'
-                required
-                placeholder='*******'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
-              />
-            </div>
-          </div>
 
-          <div>
-            <button
-              type='submit'
-              className='bg-lime-500 w-full rounded-md py-3 text-white'
-            >
-              {loading ? (
-                <TbFidgetSpinner className='animate-spin m-auto' />
-              ) : (
-                'Continue'
-              )}
-            </button>
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <input type="text" name="name" required placeholder="Full Name" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-100 focus:ring-lime-500 focus:border-lime-500" />
+          <input type="file" name="image" accept="image/*" required className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-100 focus:ring-lime-500 focus:border-lime-500" />
+          <input type="email" name="email" required placeholder="Email Address" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-100 focus:ring-lime-500 focus:border-lime-500" />
+          <input type="password" name="password" required placeholder="Password" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-100 focus:ring-lime-500 focus:border-lime-500" />
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <button type="submit" className="w-full py-3 bg-lime-500 text-white font-semibold rounded-md hover:bg-lime-600 transition duration-200" disabled={isSubmitting}>
+            {isSubmitting ? <TbFidgetSpinner className="animate-spin m-auto" /> : "Sign Up"}
+          </button>
         </form>
-        <div className='flex items-center pt-4 space-x-1'>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-          <p className='px-3 text-sm dark:text-gray-400'>
-            Signup with social accounts
-          </p>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-        </div>
-        <div
-          onClick={handleGoogleSignIn}
-          className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
-        >
-          <FcGoogle size={32} />
 
-          <p>Continue with Google</p>
+        <div className="text-center mt-3">
+          <button className="text-sm text-gray-500 hover:text-lime-500">Forgot password?</button>
         </div>
-        <p className='px-6 text-sm text-center text-gray-400'>
-          Already have an account?{' '}
-          <Link
-            to='/login'
-            className='hover:underline hover:text-lime-500 text-gray-600'
-          >
-            Login
-          </Link>
-          .
+
+        <div className="flex items-center mt-4">
+          <div className="flex-1 h-px bg-gray-300"></div>
+          <p className="px-3 text-sm text-gray-500">or sign up with</p>
+          <div className="flex-1 h-px bg-gray-300"></div>
+        </div>
+
+        <button onClick={handleGoogleSignIn} className="w-full flex justify-center items-center space-x-3 border py-2 mt-3 rounded-md hover:bg-gray-100 transition duration-200" disabled={isSubmitting}>
+          <FcGoogle size={28} />
+          <span>Continue with Google</span>
+        </button>
+
+        <p className="mt-4 text-sm text-center text-gray-500">
+          Already have an account? {" "}
+          <Link to="/login" className="text-lime-500 font-medium hover:underline">Log in</Link>.
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
