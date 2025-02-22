@@ -151,7 +151,7 @@ const TaskBoard = () => {
                             {...provided.dragHandleProps}
                             className={`card text-black dark:text-white  w-full sm:w-full md:w-96 mb-4 ${getCategoryColor(task.category)}`}
                           >
-                            <div className="card shadow-xl rounded-2xl p-4 border border-gray-200 dark:text-white">
+                            <div className="card shadow-2xl rounded-2xl border border-gray-200 dark:text-white">
                               <div className="card-body space-y-4">
 
                                 {/* User Info Section */}
@@ -169,7 +169,6 @@ const TaskBoard = () => {
                                     </div>
                                   )}
 
-                                  {/* Name & Email */}
                                   <div>
                                     <h3 className="text-lg font-semibold ">{task.displayName}</h3>
                                     <p className="text-sm text-gray-600 dark:text-gray-200">{task.email}</p>
