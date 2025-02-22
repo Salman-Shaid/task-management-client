@@ -104,7 +104,6 @@ const TaskBoard = () => {
 
   return (
     <div className="flex flex-col w-full gap-10 p-4 sm:p-6 lg:p-8">
-      {/* Button to toggle create task form */}
       <button
   className="btn btn-success btn-outline text-3xl px-12 py-8 min-h-[100px] flex items-center gap-4"
   onClick={() => setIsCreateFormOpen(!isCreateFormOpen)}
