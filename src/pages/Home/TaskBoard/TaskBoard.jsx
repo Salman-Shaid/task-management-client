@@ -118,12 +118,10 @@ const TaskBoard = () => {
     </>
   )}
 </button>
-
-      {/* Create Task Form */}
       {isCreateFormOpen && (
         <CreateTask
           onTaskCreated={(newTask) => setTasks((prevTasks) => [...prevTasks, newTask])}
-          className="w-full max-w-2xl mx-auto sm:w-96 lg:w-1/2 xl:w-1/3" // Adjusting form size
+          className="w-full max-w-2xl mx-auto sm:w-96 lg:w-1/2 xl:w-1/3"
         />
       )}
 
