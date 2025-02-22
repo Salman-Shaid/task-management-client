@@ -5,6 +5,7 @@
 
 ## 📂 GitHub Repositories
 
+- **Frontend Repo :** [GitHub Link -- Click here..  ](https://github.com/Salman-Shaid/task-management-client)
 - **Backend Repo :** [GitHub Link -- Click here.. ](https://github.com/Salman-Shaid/task-management-server)
 
 ---
