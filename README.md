@@ -27,4 +27,4 @@ This is the **backend** for the **Task Management Application**, built with **No
 ## 📦 Dependencies
 Install required dependencies:
 ```bash
-npm install express mongoose socket.io cors dotenv firebase-admin axios
+
