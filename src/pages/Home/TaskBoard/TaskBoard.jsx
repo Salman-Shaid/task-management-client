@@ -13,11 +13,11 @@ import { GiCancel } from "react-icons/gi";
 const getCategoryColor = (category) => {
   switch (category) {
     case "To-Do":
-      return "bg-blue-200  dark:bg-slate-600";
+      return "bg-blue-200  dark:bg-slate-900";
     case "In Progress":
-      return "bg-yellow-200 dark:bg-slate-600";
+      return "bg-yellow-200 dark:bg-slate-900";
     case "Done":
-      return "bg-green-200 dark:bg-slate-600";
+      return "bg-green-200 dark:bg-slate-900";
     default:
       return "bg-gray-500 ";
   }

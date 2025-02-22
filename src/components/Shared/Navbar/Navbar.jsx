@@ -10,8 +10,8 @@ const Navbar = () => {
   
 
   return (
-    <div className='fixed dark:bg-slate-900 w-full bg-white z-10 shadow-sm'>
-      <div className='py-4 border-b-[1px]'> 
+    <div className='fixed dark:bg-gray-900 border-b dark:border-gray-800 w-full bg-gray-50 z-10 shadow-sm'>
+      <div className='py-4'> 
         <Container>
           <div className=' flex justify-between items-center px-4'>
           {/* Logo */}

@@ -1,49 +1,56 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
-import useAuth from '../../hooks/useAuth'; // Import authentication hook
-import PropTypes from 'prop-types'; // Import PropTypes
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
+import PropTypes from "prop-types";
 
 const CreateTask = ({ onTaskCreated }) => {
-  const { user } = useAuth(); // Get logged-in user's details
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('To-Do');
+  const { user } = useAuth();
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    category: "To-Do",
+  });
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setTask({ ...task, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (title.length > 50) {
-      return toast.error('Title must be 50 characters or less');
+    if (task.title.length > 50) {
+      return toast.error("Title must be 50 characters or less");
     }
-    if (description.length > 200) {
-      return toast.error('Description must be 200 characters or less');
+    if (task.description.length > 200) {
+      return toast.error("Description must be 200 characters or less");
     }
-
     if (!user) {
-      return toast.error('You must be logged in to create a task.');
+      return toast.error("You must be logged in to create a task.");
     }
 
     const newTask = {
-      title,
-      description,
-      category,
+      ...task,
       timestamp: new Date().toISOString(),
-      email: user.email, // Store the logged-in user's email
-      displayName: user.displayName, // Store the logged-in user's name
+      email: user.email,
+      displayName: user.displayName,
     };
 
     try {
       setLoading(true);
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, newTask);
-      if (response.data.insertedId) {
-        toast.success('Task Created Successfully');
-        onTaskCreated(response.data);
-        setTitle('');
-        setDescription('');
-        setCategory('To-Do');
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/tasks`,
+        newTask
+      );
+
+      if (response.data._id) {
+        toast.success("Task Created Successfully");
+        onTaskCreated(response.data); // Update UI immediately
+        setTask({ title: "", description: "", category: "To-Do" }); // Reset form
       }
+    } catch (error) {
+      toast.error("Failed to create task");
     } finally {
       setLoading(false);
     }
@@ -51,14 +58,15 @@ const CreateTask = ({ onTaskCreated }) => {
 
   return (
     <div className="hero bg-green-700 dark:bg-base-200 rounded-xl">
-      <div className="hero-content gap-20 flex-col lg:flex-row-reverse ">
+      <div className="hero-content gap-20 flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Create a New Task</h1>
           <p className="py-6">
-            Provide details for the new task you d like to create. Select a category and give it a title and description.
+            Provide details for the new task you'd like to create. Select a
+            category and give it a title and description.
           </p>
         </div>
-        <div className="card bg-base-100  w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <form className="card-body" onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label">
@@ -66,8 +74,9 @@ const CreateTask = ({ onTaskCreated }) => {
               </label>
               <input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                name="title"
+                value={task.title}
+                onChange={handleChange}
                 required
                 maxLength={50}
                 className="input input-bordered"
@@ -79,8 +88,9 @@ const CreateTask = ({ onTaskCreated }) => {
                 <span className="label-text">Description</span>
               </label>
               <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                name="description"
+                value={task.description}
+                onChange={handleChange}
                 maxLength={200}
                 className="textarea textarea-bordered"
                 placeholder="Enter task description (optional)"
@@ -91,8 +101,9 @@ const CreateTask = ({ onTaskCreated }) => {
                 <span className="label-text">Category</span>
               </label>
               <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                name="category"
+                value={task.category}
+                onChange={handleChange}
                 className="select select-bordered"
               >
                 <option value="To-Do">To-Do</option>
@@ -106,7 +117,7 @@ const CreateTask = ({ onTaskCreated }) => {
                 className="btn btn-primary"
                 disabled={loading}
               >
-                {loading ? 'Creating...' : 'Create Task'}
+                {loading ? "Creating..." : "Create Task"}
               </button>
             </div>
           </form>
@@ -116,9 +127,9 @@ const CreateTask = ({ onTaskCreated }) => {
   );
 };
 
-// PropTypes validation for props
+// PropTypes validation
 CreateTask.propTypes = {
-  onTaskCreated: PropTypes.func.isRequired, // onTaskCreated should be a function
+  onTaskCreated: PropTypes.func.isRequired,
 };
 
 export default CreateTask;

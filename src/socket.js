@@ -1,4 +1,4 @@
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:5000'); // Adjust URL if needed
+const socket = io('https://task-management-server-j8t7.onrender.com'); // Adjust URL if needed
 export default socket;
