@@ -1,4 +1,4 @@
-# 📝 Task Management Application - Backend
+# 📝 Task Management Application - FontEnd
 
 ## 🚀 Live Application
 🔗 [Frontend Live Demo](https://task-management-234b9.web.app/)
