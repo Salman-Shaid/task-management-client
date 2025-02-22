@@ -4,7 +4,7 @@
 🔗 [Frontend Live Demo](https://task-management-234b9.web.app/)
 
 ## 📂 GitHub Repositories
-- **Frontend Repo:** [GitHub](https://github.com/Salman-Shaid/task-management-client)
+
 - **Backend Repo:** [GitHub](https://github.com/Salman-Shaid/task-management-server)
 
 ---
