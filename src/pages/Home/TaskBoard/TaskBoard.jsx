@@ -178,7 +178,8 @@ const TaskBoard = () => {
                                 <p className="text-xs text-gray-500 dark:text-gray-100">
                                   {new Date(task.timestamp).toLocaleString()}
                                 </p>
-
+                                
+                                <div className="divider"></div>
                                 {/* Action Buttons */}
                                 <div className="flex justify-end gap-4 mt-3">
                                   <button
