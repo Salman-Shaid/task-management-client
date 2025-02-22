@@ -1,8 +1,35 @@
-# React + Vite
+# Task Management Application Backend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Live Demo
+🔗 Live Application : https://task-management-234b9.web.app/
 
-Currently, two official plugins are available:
+## 📂 Repositories
+- **Frontend Repo:** [GitHub Link](https://github.com/Salman-Shaid/task-management-server)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## 📌 Description
+A **Task Management Application** that allows users to **add, edit, delete, and reorder tasks** in real-time using **drag-and-drop functionality**. The app syncs updates instantly with **WebSockets** and supports **Google authentication**.
+
+---
+
+## 🛠️ Technologies Used
+### 🔹 **Frontend**
+- React (Vite)
+- Tailwind CSS
+- @hello-pangea/dnd (Drag & Drop)
+- Firebase Authentication
+
+### 🔹 **Backend**
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- WebSockets (Socket.io)
+
+---
+
+## 📦 Dependencies
+### **Frontend**
+```bash
+npm install react @hello-pangea/dnd socket.io-client firebase tailwindcss
+
