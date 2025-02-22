@@ -62,7 +62,7 @@ const CreateTask = ({ onTaskCreated }) => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Create a New Task</h1>
           <p className="py-6">
-            Provide details for the new task you'd like to create. Select a
+            Provide details for the new task you did like to create. Select a
             category and give it a title and description.
           </p>
         </div>
@@ -127,7 +127,7 @@ const CreateTask = ({ onTaskCreated }) => {
   );
 };
 
-// PropTypes validation
+
 CreateTask.propTypes = {
   onTaskCreated: PropTypes.func.isRequired,
 };
