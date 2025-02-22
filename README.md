@@ -1,35 +1,30 @@
-# Task Management Application Backend
+# 📝 Task Management Application - Backend
 
-## 🚀 Live Demo
-🔗 Live Application : https://task-management-234b9.web.app/
+## 🚀 Live Application
+🔗 [Frontend Live Demo](https://task-management-234b9.web.app/)
 
-## 📂 Repositories
-- **Frontend Repo:** [GitHub Link](https://github.com/Salman-Shaid/task-management-server)
+## 📂 GitHub Repositories
+- **Frontend Repo:** [GitHub](https://github.com/Salman-Shaid/task-management-client)
+- **Backend Repo:** [GitHub](https://github.com/Salman-Shaid/task-management-server)
 
 ---
 
 ## 📌 Description
-A **Task Management Application** that allows users to **add, edit, delete, and reorder tasks** in real-time using **drag-and-drop functionality**. The app syncs updates instantly with **WebSockets** and supports **Google authentication**.
+This is the **backend** for the **Task Management Application**, built with **Node.js and Express.js**. It provides a **RESTful API** to manage tasks, supports **real-time synchronization** via **WebSockets (Socket.io)**, and integrates with **Firebase Authentication** for user management.  
 
 ---
 
 ## 🛠️ Technologies Used
-### 🔹 **Frontend**
-- React (Vite)
-- Tailwind CSS
-- @hello-pangea/dnd (Drag & Drop)
-- Firebase Authentication
-
-### 🔹 **Backend**
-- Node.js
-- Express.js
-- MongoDB (Mongoose)
-- WebSockets (Socket.io)
+- **Node.js** - Backend runtime
+- **Express.js** - API framework
+- **MongoDB & Mongoose** - Database & ODM
+- **Socket.io** - Real-time WebSockets
+- **Firebase Admin SDK** - Authentication
+- **CORS & dotenv** - Middleware for security & environment variables
 
 ---
 
 ## 📦 Dependencies
-### **Frontend**
+Install required dependencies:
 ```bash
-npm install react @hello-pangea/dnd socket.io-client firebase tailwindcss
-
+npm install express mongoose socket.io cors dotenv firebase-admin axios
