@@ -5,7 +5,6 @@ import useAuth from "../../../hooks/useAuth";
 import CreateTask from "../CreateTask";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-// import Swal from "sweetalert2"; // Import SweetAlert2
 import { BiSolidAddToQueue } from "react-icons/bi";
 const categories = ["To-Do", "In Progress", "Done"];
 import { GiCancel } from "react-icons/gi";
