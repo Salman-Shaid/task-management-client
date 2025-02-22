@@ -79,7 +79,7 @@ const TaskBoard = () => {
   const closeModal = () => {
     setEditingTask(null);
     setIsModalOpen(false);
-    setIsCreateFormOpen(false); 
+    setIsCreateFormOpen(false);
   };
 
   const handleUpdate = (e) => {
@@ -105,19 +105,27 @@ const TaskBoard = () => {
   return (
     <div className="flex flex-col w-full gap-10 p-4 sm:p-6 lg:p-8">
       <button
-  className="btn btn-success btn-outline text-3xl px-12 py-8 min-h-[100px] flex items-center gap-4"
-  onClick={() => setIsCreateFormOpen(!isCreateFormOpen)}
->
-  {isCreateFormOpen ? (
-    <>
-      <GiCancel size={40} /> <span>Cancel Create Task</span>
-    </>
-  ) : (
-    <>
-      <BiSolidAddToQueue size={40} /> <span>Create New Task</span>
-    </>
-  )}
-</button>
+        className="btn btn-success rounded-full btn-outline text-base sm:text-lg md:text-xl lg:text-2xl 
+             px-6 sm:px-8 md:px-10 lg:px-12 
+             py-4 sm:py-5 md:py-6 lg:py-8 
+             min-h-[50px] sm:min-h-[70px] md:min-h-[90px] lg:min-h-[100px] 
+             w-full sm:w-auto max-w-xs sm:max-w-sm lg:max-w-md 
+             flex items-center justify-center gap-2 sm:gap-3 md:gap-4"
+        onClick={() => setIsCreateFormOpen(!isCreateFormOpen)}
+      >
+        {isCreateFormOpen ? (
+          <>
+            <GiCancel className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
+            <span>Cancel Create Task</span>
+          </>
+        ) : (
+          <>
+            <BiSolidAddToQueue className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
+            <span>Create New Task</span>
+          </>
+        )}
+      </button>
+
       {isCreateFormOpen && (
         <CreateTask
           onTaskCreated={(newTask) => setTasks((prevTasks) => [...prevTasks, newTask])}
@@ -145,14 +153,14 @@ const TaskBoard = () => {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`card text-black dark:text-white  w-full sm:w-full md:w-96 mb-4 ${getCategoryColor(task.category)}`}
+                            className={`card text-black dark:text-white  w-full sm:w-full md:max-w-96 mb-4 ${getCategoryColor(task.category)}`}
                           >
                             <div className="card shadow-2xl rounded-2xl border border-gray-200 dark:text-white">
                               <div className="card-body space-y-4">
 
-                   
+
                                 <div className="flex items-center gap-4">
-                                 
+
                                   {task.image ? (
                                     <img
                                       src={task.image}
@@ -180,18 +188,18 @@ const TaskBoard = () => {
                                   {new Date(task.timestamp).toLocaleString()}
                                 </p>
 
-                          
+
                                 {/* Action Buttons */}
                                 <div className="flex justify-end gap-4 mt-3">
                                   <button
-                                    className="flex items-center gap-1 px-4 py-1.5 text-sm font-medium text-blue-600 border border-blue-500 rounded-lg hover:bg-blue-100 transition-all "
+                                    className="flex items-center gap-1 px-4 py-1.5 text-sm font-medium text-blue-600 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition-all "
                                     onClick={() => openUpdateModal(task)}
                                   >
                                     <FaRegEdit size={18} /> Edit
                                   </button>
 
                                   <button
-                                    className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-red-600 border border-red-500 rounded-lg hover:bg-red-100 transition-all"
+                                    className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-red-600 border border-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all"
                                     onClick={() => handleDelete(task._id)}
                                   >
                                     <MdDeleteForever size={18} /> Delete
