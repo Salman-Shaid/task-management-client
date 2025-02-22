@@ -80,7 +80,7 @@ const TaskBoard = () => {
   const closeModal = () => {
     setEditingTask(null);
     setIsModalOpen(false);
-    setIsCreateFormOpen(false); // Close create task form when modal is closed
+    setIsCreateFormOpen(false); 
   };
 
   const handleUpdate = (e) => {
@@ -214,7 +214,7 @@ const TaskBoard = () => {
         </div>
       </DragDropContext>
 
-      {/* Modal for updating task */}
+      {/* Modal */}
       {isModalOpen && editingTask && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-[90%] md:w-[80%] lg:w-[40%]">
