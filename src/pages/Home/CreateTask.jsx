@@ -50,6 +50,7 @@ const CreateTask = ({ onTaskCreated }) => {
         setTask({ title: "", description: "", category: "To-Do" });
       }
     } catch (error) {
+      console.error("Error creating task:", error); // Log error for debugging
       toast.error("Failed to create task");
     } finally {
       setLoading(false);
