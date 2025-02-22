@@ -46,8 +46,8 @@ const CreateTask = ({ onTaskCreated }) => {
 
       if (response.data._id) {
         toast.success("Task Created Successfully");
-        onTaskCreated(response.data); // Update UI immediately
-        setTask({ title: "", description: "", category: "To-Do" }); // Reset form
+        onTaskCreated(response.data); 
+        setTask({ title: "", description: "", category: "To-Do" });
       }
     } catch (error) {
       toast.error("Failed to create task");
