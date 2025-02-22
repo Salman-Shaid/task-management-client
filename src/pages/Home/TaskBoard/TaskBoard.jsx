@@ -150,9 +150,9 @@ const TaskBoard = () => {
                             <div className="card shadow-2xl rounded-2xl border border-gray-200 dark:text-white">
                               <div className="card-body space-y-4">
 
-                                {/* User Info Section */}
+                   
                                 <div className="flex items-center gap-4">
-                                  {/* User Image or Initial */}
+                                 
                                   {task.image ? (
                                     <img
                                       src={task.image}
